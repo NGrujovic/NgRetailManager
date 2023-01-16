@@ -1,0 +1,2 @@
+# NgRetailManager
+Retail Manager System
