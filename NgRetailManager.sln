@@ -5,6 +5,10 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRMDataManager", "NRMDataManager\NRMDataManager.csproj", "{443E5B46-FEF5-4528-B2ED-5DCC1B589276}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NgRMData", "NgRMData\NgRMData.sqlproj", "{BCABA65A-711C-4FD1-A09E-5B7085C808FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgRMDesktopUserInterface", "NgRMDesktopUserInterface\NgRMDesktopUserInterface.csproj", "{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{443E5B46-FEF5-4528-B2ED-5DCC1B589276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{443E5B46-FEF5-4528-B2ED-5DCC1B589276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{443E5B46-FEF5-4528-B2ED-5DCC1B589276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCABA65A-711C-4FD1-A09E-5B7085C808FE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
