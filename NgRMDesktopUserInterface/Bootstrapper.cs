@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using NgRMDesktopUI.Library.Api;
+using NgRMDesktopUI.Library.Models;
 using NgRMDesktopUserInterface.Helpers;
 using NgRMDesktopUserInterface.ViewModels;
 using System;
@@ -31,6 +33,7 @@ namespace NgRMDesktopUserInterface
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<ILoggedInUserModel, LoggedInUserModel>()
                 .Singleton<IAPIHelper, APIHelper>();
 
             GetType().Assembly.GetTypes()

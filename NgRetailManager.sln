@@ -9,6 +9,10 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "NgRMData", "NgRMData\NgRMDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgRMDesktopUserInterface", "NgRMDesktopUserInterface\NgRMDesktopUserInterface.csproj", "{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgRMDataManager.Library", "NgRMDataManager.Library\NgRMDataManager.Library.csproj", "{324A4AEB-34C0-477F-9CD4-425F793DB857}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NgRMDesktopUI.Library", "NgRMDesktopUI.Library\NgRMDesktopUI.Library.csproj", "{3D0F14C8-5AAB-4A6C-9520-2935988196E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D7B0DD-C40A-4DA1-ADF5-165D5BF71823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{324A4AEB-34C0-477F-9CD4-425F793DB857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324A4AEB-34C0-477F-9CD4-425F793DB857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{324A4AEB-34C0-477F-9CD4-425F793DB857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324A4AEB-34C0-477F-9CD4-425F793DB857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0F14C8-5AAB-4A6C-9520-2935988196E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0F14C8-5AAB-4A6C-9520-2935988196E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0F14C8-5AAB-4A6C-9520-2935988196E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0F14C8-5AAB-4A6C-9520-2935988196E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

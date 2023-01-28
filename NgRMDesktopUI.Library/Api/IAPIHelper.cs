@@ -1,10 +1,12 @@
-﻿using NgRMDesktopUserInterface.Models;
+﻿
+using NgRMDesktopUserInterface.Models;
 using System.Threading.Tasks;
 
-namespace NgRMDesktopUserInterface.Helpers
+namespace NgRMDesktopUI.Library.Api
 {
     public interface IAPIHelper
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
+        Task GetLoggedInUserInfo(string token);
     }
 }
