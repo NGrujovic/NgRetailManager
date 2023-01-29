@@ -6,17 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NgRMDesktopUI.Library.Api;
+using NgRMDesktopUserInterface.EventModels;
+
 namespace NgRMDesktopUserInterface.ViewModels
 {
     public class LoginViewModel : Screen
     {
         private string _userName;
         private string _password;
+        private IEventAggregator _events;
         
         private IAPIHelper _apiHelper;
-        public LoginViewModel(IAPIHelper apiHelper)
+        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
             _apiHelper = apiHelper;
+            _events = events;
         }
         public string UserName
         {
@@ -90,6 +94,8 @@ namespace NgRMDesktopUserInterface.ViewModels
 
                 //capture more information about user
                 await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+
+                _events.PublishOnUIThread(new LogOnEvent());
                 
             }
             catch (Exception ex)
