@@ -1,5 +1,6 @@
 ﻿
 using NgRMDesktopUserInterface.Models;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NgRMDesktopUI.Library.Api
@@ -8,5 +9,6 @@ namespace NgRMDesktopUI.Library.Api
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLoggedInUserInfo(string token);
+        HttpClient ApiClient { get; }
     }
 }
