@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using NgRMDesktopUI.Library.Api;
+using NgRMDesktopUI.Library.Helpers;
 using NgRMDesktopUI.Library.Models;
 using NgRMDesktopUserInterface.Helpers;
 using NgRMDesktopUserInterface.ViewModels;
@@ -28,6 +29,7 @@ namespace NgRMDesktopUserInterface
 
         protected override void Configure()
         {
+            //TODO:create class for container configuration
             _container.Instance(_container)
                 .PerRequest<IProductEndpoint,ProductEndpoint>();
 
@@ -36,6 +38,7 @@ namespace NgRMDesktopUserInterface
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>()
+                .Singleton<IConfigHelper,ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
 
             GetType().Assembly.GetTypes()
