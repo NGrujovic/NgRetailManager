@@ -31,7 +31,9 @@ namespace NgRMDesktopUserInterface
         {
             //TODO:create class for container configuration
             _container.Instance(_container)
-                .PerRequest<IProductEndpoint,ProductEndpoint>();
+                .PerRequest<ISaleEndpoint,SaleEndpoint>()
+                .PerRequest<IProductEndpoint, ProductEndpoint>();
+                
 
 
             _container

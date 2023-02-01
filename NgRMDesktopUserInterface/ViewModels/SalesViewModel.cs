@@ -18,12 +18,12 @@ namespace NgRMDesktopUserInterface.ViewModels
         private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
         private IProductEndpoint _productEndpoint;
         private IConfigHelper _configHelper;
-        public  SalesViewModel(IProductEndpoint productEndpoint,IConfigHelper configHelper)
+        private ISaleEndpoint _saleEndpoint;
+        public  SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndpoint saleEndpoint)
         {
             _productEndpoint = productEndpoint;
             _configHelper = configHelper;
-
-
+            _saleEndpoint = saleEndpoint;
         }
 
 
@@ -72,9 +72,10 @@ namespace NgRMDesktopUserInterface.ViewModels
         {
             decimal taxAmmount = 0;
             decimal taxRate = _configHelper.GetTaxRate();
-            Cart.Where(x=> x.Product.IsTaxable).Sum(x=> (x.Product.RetailPrice * x.QuantityInCart)*(taxRate/100));
             
-            
+            taxAmmount = Cart.Where(x=> x.Product.IsTaxable).Sum(x=> (x.Product.RetailPrice * x.QuantityInCart)*(taxRate/100));
+
+
             //foreach (var item in Cart)
             //{
             //    if (item.Product.IsTaxable)
@@ -175,6 +176,10 @@ namespace NgRMDesktopUserInterface.ViewModels
             {
                 //Make sure something is in cart
                 bool output = false;
+                if(_cart.Count > 0)
+                {
+                    output = true;
+                }
                 return output;
             }
         }
@@ -206,7 +211,8 @@ namespace NgRMDesktopUserInterface.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
-            
+            NotifyOfPropertyChange(() => CanCheckout);
+
 
 
 
@@ -220,10 +226,23 @@ namespace NgRMDesktopUserInterface.ViewModels
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckout);
         }
 
-        public void Checkout()
+        public async Task Checkout()
         {
+
+            SaleModel sale = new SaleModel();
+            foreach(var item in Cart)
+            {
+                sale.SaleDetails.Add(new SaleDetailModel
+                {
+                    ProductId = item.Product.Id,
+                    Quantity = item.QuantityInCart
+                });
+            }
+
+            await _saleEndpoint.PostSale(sale);
 
         }
 

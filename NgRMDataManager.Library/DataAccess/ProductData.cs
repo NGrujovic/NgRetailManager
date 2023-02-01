@@ -21,5 +21,14 @@ namespace NgRMDataManager.Library.DataAccess
             
             return output;
         }
+        public ProductModel GetAllProductById(int productId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+
+            var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetById",new { Id = productId }, "NgRmDataConnection").FirstOrDefault();
+
+            return output;
+        }
     }
 }
