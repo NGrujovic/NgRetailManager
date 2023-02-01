@@ -206,6 +206,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
+            
 
 
 
