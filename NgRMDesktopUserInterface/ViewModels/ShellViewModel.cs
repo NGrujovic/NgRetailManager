@@ -13,19 +13,18 @@ namespace NgRMDesktopUserInterface.ViewModels
         
         private IEventAggregator _events;
         private SalesViewModel _salesVm;
-        private SimpleContainer _container;
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVm,
-            SimpleContainer container)
+        
+        public ShellViewModel(IEventAggregator events, SalesViewModel salesVm)
         {
             
             _events = events;
             _salesVm = salesVm;
-            _container = container;
+            
             // Subscribing shell view to events, telling it to start listening for specific event
             _events.Subscribe(this);
 
 
-            ActivateItem(_container.GetInstance<LoginViewModel>());
+            ActivateItem(IoC.Get<LoginViewModel>());
 
         }
 
