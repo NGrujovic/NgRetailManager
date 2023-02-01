@@ -72,14 +72,17 @@ namespace NgRMDesktopUserInterface.ViewModels
         {
             decimal taxAmmount = 0;
             decimal taxRate = _configHelper.GetTaxRate();
-            foreach (var item in Cart)
-            {
-                if (item.Product.IsTaxable)
-                {
-                    taxAmmount += (item.Product.RetailPrice * item.QuantityInCart) * (taxRate / 100);
-                }
+            Cart.Where(x=> x.Product.IsTaxable).Sum(x=> (x.Product.RetailPrice * x.QuantityInCart)*(taxRate/100));
+            
+            
+            //foreach (var item in Cart)
+            //{
+            //    if (item.Product.IsTaxable)
+            //    {
+            //        taxAmmount += (item.Product.RetailPrice * item.QuantityInCart) * (taxRate / 100);
+            //    }
 
-            }
+            //}
 
             return taxAmmount;
         }
