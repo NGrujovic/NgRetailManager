@@ -187,7 +187,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             {
                 
                 bool output = false;
-                if (SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0)
+                if (SelectedCartItem != null && SelectedCartItem?.QuantityInCart > 0)
                 {
                     output = true;
 
@@ -270,6 +270,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => CanCheckout);
+            NotifyOfPropertyChange(() => CanAddToCart);
             NotifyOfPropertyChange(() => CanRemoveFromCart);
         }
 
