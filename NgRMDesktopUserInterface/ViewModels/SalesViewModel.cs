@@ -138,6 +138,19 @@ namespace NgRMDesktopUserInterface.ViewModels
             }
         }
 
+        private CartItemDisplayModel _selectedCartItem;
+
+        public CartItemDisplayModel SelectedCartItem
+        {
+            get { return _selectedCartItem; }
+            set
+            {
+                _selectedCartItem = value;
+                NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
+            }
+        }
+
 
 
         public int ItemQuantity
@@ -172,8 +185,13 @@ namespace NgRMDesktopUserInterface.ViewModels
         {
             get
             {
-                //Make sure something is selected to remove
+                
                 bool output = false;
+                if (SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0)
+                {
+                    output = true;
+
+                }
                 return output;
             }
         }
@@ -231,10 +249,28 @@ namespace NgRMDesktopUserInterface.ViewModels
         public void RemoveFromCart()
         {
 
+            
+
+
+            SelectedCartItem.Product.QuantityInStock += 1;
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart -= 1;
+                
+            }
+            else
+            {
+               
+                Cart.Remove(SelectedCartItem);
+            }
+
+            
+            ItemQuantity = 1;
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => CanCheckout);
+            NotifyOfPropertyChange(() => CanRemoveFromCart);
         }
 
         public async Task Checkout()
