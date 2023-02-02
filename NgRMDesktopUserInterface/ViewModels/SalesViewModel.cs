@@ -1,7 +1,9 @@
-﻿using Caliburn.Micro;
+﻿using AutoMapper;
+using Caliburn.Micro;
 using NgRMDesktopUI.Library.Api;
 using NgRMDesktopUI.Library.Helpers;
 using NgRMDesktopUI.Library.Models;
+using NgRMDesktopUserInterface.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,14 +15,17 @@ namespace NgRMDesktopUserInterface.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private BindingList<ProductModel> _products;
+        private BindingList<ProductDisplayModel> _products;
         private int _itemQuantity = 1;
-        private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
+        private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
         private IProductEndpoint _productEndpoint;
         private IConfigHelper _configHelper;
         private ISaleEndpoint _saleEndpoint;
-        public  SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndpoint saleEndpoint)
+        private IMapper _mapper;
+        public  SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndpoint saleEndpoint
+            ,IMapper mapper)
         {
+            _mapper = mapper;
             _productEndpoint = productEndpoint;
             _configHelper = configHelper;
             _saleEndpoint = saleEndpoint;
@@ -35,7 +40,10 @@ namespace NgRMDesktopUserInterface.ViewModels
         private async Task LoadProducts()
         {
             var productList = await _productEndpoint.GetAll();
-            Products = new BindingList<ProductModel>(productList);
+            // Mapping to a list of product display model using AutoMapper
+            
+            var products = _mapper.Map<List<ProductDisplayModel>>(productList);
+            Products = new BindingList<ProductDisplayModel>(products);
         }
         
         public string SubTotal
@@ -98,7 +106,7 @@ namespace NgRMDesktopUserInterface.ViewModels
         }
     
 
-        public BindingList<ProductModel> Products
+        public BindingList<ProductDisplayModel> Products
         {
             get { return _products; }
             set {
@@ -109,7 +117,7 @@ namespace NgRMDesktopUserInterface.ViewModels
 
         
 
-        public BindingList<CartItemModel> Cart
+        public BindingList<CartItemDisplayModel> Cart
         {
             get { return _cart; }
             set { _cart = value;
@@ -118,9 +126,9 @@ namespace NgRMDesktopUserInterface.ViewModels
         }
 
         
-        private ProductModel _selectedProduct;
+        private ProductDisplayModel _selectedProduct;
 
-        public ProductModel SelectedProduct
+        public ProductDisplayModel SelectedProduct
         {
             get { return _selectedProduct; }
             set {
@@ -186,18 +194,18 @@ namespace NgRMDesktopUserInterface.ViewModels
 
         public void AddToCart()
         {
-            CartItemModel existingItem = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
+            CartItemDisplayModel existingItem = Cart.FirstOrDefault(x => x.Product == SelectedProduct);
             if(existingItem != null)
             {
                 existingItem.QuantityInCart += ItemQuantity;
                 
                 //Hack to trick the system to refresh list (temporary solution)
-                Cart.Remove(existingItem);
-                Cart.Add(existingItem);
+                //Cart.Remove(existingItem);
+                //Cart.Add(existingItem);
             }
             else
             {
-                CartItemModel item = new CartItemModel
+                CartItemDisplayModel item = new CartItemDisplayModel
                 {
                     Product = SelectedProduct,
                     QuantityInCart = ItemQuantity
@@ -243,6 +251,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             }
 
             await _saleEndpoint.PostSale(sale);
+            //Restart cart after successful sale post
 
         }
 

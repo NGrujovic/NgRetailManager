@@ -1,8 +1,10 @@
-﻿using Caliburn.Micro;
+﻿using AutoMapper;
+using Caliburn.Micro;
 using NgRMDesktopUI.Library.Api;
 using NgRMDesktopUI.Library.Helpers;
 using NgRMDesktopUI.Library.Models;
 using NgRMDesktopUserInterface.Helpers;
+using NgRMDesktopUserInterface.Models;
 using NgRMDesktopUserInterface.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,8 +29,25 @@ namespace NgRMDesktopUserInterface
             "PasswordChanged");
         }
 
+        private IMapper ConfigureAutoMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProductModel, ProductDisplayModel>();
+                cfg.CreateMap<CartItemModel, CartItemDisplayModel>();
+            });
+
+            var output = config.CreateMapper();
+            return output;
+        }
+
         protected override void Configure()
         {
+            //AutoMapper tool configuration
+
+            
+            _container.Instance(ConfigureAutoMapper());
+
             //TODO:create class for container configuration
             _container.Instance(_container)
                 .PerRequest<ISaleEndpoint,SaleEndpoint>()

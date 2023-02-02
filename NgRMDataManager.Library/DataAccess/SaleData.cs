@@ -66,6 +66,8 @@ namespace NgRMDataManager.Library.DataAccess
             }
 
             //TODO lover quantity of purchused products
+
+            
             
         }
         
