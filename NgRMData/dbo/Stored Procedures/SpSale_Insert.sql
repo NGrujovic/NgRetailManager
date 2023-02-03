@@ -11,6 +11,6 @@ set nocount on;
 	INSERT INTO dbo.Sale(CashierId,SaleDate,Subtotal,Tax,Total) 
 	values(@CashierId,@SaleDate,@Subtotal,@Tax,@Total);
 	
-	Select @Id = @@IDENTITY;
+	Select @Id = SCOPE_IDENTITY();
 
 end
