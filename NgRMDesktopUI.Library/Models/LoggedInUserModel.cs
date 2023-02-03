@@ -16,7 +16,7 @@ namespace NgRMDesktopUI.Library.Models
         public string LastName { get; set; }
         public string EmailAdress { get; set; }
         public DateTime CreatedDate { get; set; }
-        public void LogOffUser()
+        public void ResetUserModel()
         {
             Token = "";
             AuthUserId = "";

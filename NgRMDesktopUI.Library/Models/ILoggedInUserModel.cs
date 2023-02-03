@@ -10,6 +10,6 @@ namespace NgRMDesktopUI.Library.Models
         string FirstName { get; set; }
         string LastName { get; set; }
         string Token { get; set; }
-        void LogOffUser();
+        void ResetUserModel();
     }
 }

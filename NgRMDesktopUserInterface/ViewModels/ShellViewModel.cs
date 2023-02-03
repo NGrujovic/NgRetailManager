@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using NgRMDesktopUI.Library.Api;
 using NgRMDesktopUI.Library.Models;
 using NgRMDesktopUserInterface.EventModels;
 
@@ -15,8 +16,9 @@ namespace NgRMDesktopUserInterface.ViewModels
         private IEventAggregator _events;
         private SalesViewModel _salesVm;
         private ILoggedInUserModel _user;
+        private IAPIHelper _apiHelper;
       
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVm,ILoggedInUserModel user)
+        public ShellViewModel(IEventAggregator events, SalesViewModel salesVm,ILoggedInUserModel user, IAPIHelper apiHelper)
         {
             
             _events = events;
@@ -24,7 +26,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             _user = user;
             // Subscribing shell view to events, telling it to start listening for specific event
             _events.Subscribe(this);
-
+            _apiHelper = apiHelper;
 
             ActivateItem(IoC.Get<LoginViewModel>());
 
@@ -55,7 +57,11 @@ namespace NgRMDesktopUserInterface.ViewModels
         }
         public void LogOut()
         {
-            _user.LogOffUser();
+            //Clears loggedInUserModel
+            _user.ResetUserModel();
+
+            //Clears token that is in header of api
+            _apiHelper.LogOffUser();
             ActivateItem(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
 

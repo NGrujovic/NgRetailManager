@@ -52,18 +52,40 @@ namespace NgRMDataManager.Library.DataAccess
             };
             sale.Total = sale.SubTotal + sale.Tax;
             // Save sale model
-            SqlDataAccess sql = new SqlDataAccess();
-            sql.SaveData("dbo.spSale_Insert", sale, "NgRmDataConnection");
+            
 
-            //Get the ID from the sale model
-            sale.Id = sql.LoadData<int>("dbo.spSale_LastIdLookup", "NgRmDataConnection").FirstOrDefault();
-            // Finish filling in the sale detail model
-            foreach (var item in details)
+            using(SqlDataAccess sql = new SqlDataAccess())
             {
-                item.SaleId = sale.Id;
-                //Save sale detail models
-                sql.SaveData("dbo.spSaleDetail_Insert", item, "NgRmDataConnection");
+                try
+                {
+                    sql.StartTransaction("NgRmDataConnection");
+
+                    sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
+
+                    //Get the ID from the sale model
+                    sale.Id = sql.LoadDataInTransaction<int, dynamic>("dbo.spSale_LastIdLookup", new { }).FirstOrDefault();
+                    // Finish filling in the sale detail model
+                    foreach (var item in details)
+                    {
+                        item.SaleId = sale.Id;
+                        //Save sale detail models
+                        sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
+                    }
+
+                    
+                }
+                catch
+                {
+
+                    sql.RollbackTransaction();
+                    //Tell the user transaction didnt work
+                    throw;
+                }
+                
             }
+            
+
+            
 
             //TODO lover quantity of purchused products
 
