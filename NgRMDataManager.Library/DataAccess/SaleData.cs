@@ -53,7 +53,8 @@ namespace NgRMDataManager.Library.DataAccess
             sale.Total = sale.SubTotal + sale.Tax;
             // Save sale model
             
-
+            //Transaction method is method that should not be used every time, since its dangerous if we 
+            // leave open transaction
             using(SqlDataAccess sql = new SqlDataAccess())
             {
                 try
@@ -71,7 +72,7 @@ namespace NgRMDataManager.Library.DataAccess
                         //Save sale detail models
                         sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
                     }
-
+                    sql.CommitTransaction();
                     
                 }
                 catch

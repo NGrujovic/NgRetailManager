@@ -32,7 +32,7 @@ namespace NgRMDesktopUserInterface.ViewModels
             }
         }
 
-        private bool _isErrorVsbl;
+        //private bool _isErrorVsbl;
 
         public bool IsErrorVsbl
         {
