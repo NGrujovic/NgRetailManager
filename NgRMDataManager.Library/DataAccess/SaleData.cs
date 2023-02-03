@@ -84,14 +84,18 @@ namespace NgRMDataManager.Library.DataAccess
                 }
                 
             }
-            
-
-            
 
             //TODO lover quantity of purchused products
 
-            
-            
+        }
+
+        public List<SaleReportModel> GetSaleReport()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output = sql.LoadData<SaleReportModel>("dbo.spSale_SaleReport", "NgRmDataConnection");
+
+            return output;
         }
         
     }
