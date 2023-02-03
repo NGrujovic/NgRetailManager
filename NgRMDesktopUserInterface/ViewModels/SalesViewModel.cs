@@ -289,9 +289,21 @@ namespace NgRMDesktopUserInterface.ViewModels
 
             await _saleEndpoint.PostSale(sale);
             //Restart cart after successful sale post
+            await ResetSalesViewModel();
+            
 
         }
 
+        private async Task ResetSalesViewModel()
+        {
 
+            Cart = new BindingList<CartItemDisplayModel>();
+            await LoadProducts();
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckout);
+            
+        }
     }
 }
