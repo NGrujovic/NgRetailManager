@@ -7,9 +7,11 @@ using NgRMDesktopUserInterface.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NgRMDesktopUserInterface.ViewModels
 {
@@ -22,20 +24,52 @@ namespace NgRMDesktopUserInterface.ViewModels
         private IConfigHelper _configHelper;
         private ISaleEndpoint _saleEndpoint;
         private IMapper _mapper;
+        private StatusInfoViewModel _status;
+        private IWindowManager _window;
         public  SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper, ISaleEndpoint saleEndpoint
-            ,IMapper mapper)
+            ,IMapper mapper, StatusInfoViewModel status,IWindowManager window)
         {
             _mapper = mapper;
             _productEndpoint = productEndpoint;
             _configHelper = configHelper;
             _saleEndpoint = saleEndpoint;
+            _status = status;
+
+            _window = window;
         }
 
 
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            await LoadProducts();
+            try
+            {
+                await LoadProducts();
+            }
+            catch (Exception ex)
+            {
+                //Settings of message box that i show
+
+                dynamic settings = new ExpandoObject();
+                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                settings.ResizeMod = ResizeMode.NoResize;
+                settings.Title = "System Error";
+
+
+                if(ex.Message == "Unauthorized")
+                {
+                    _status.UpdateMessage("Unauthorized Access", "You do not have premission to interact with the sales form.");
+                    _window.ShowDialog(_status, null, settings);
+                }
+                else
+                {
+                    _status.UpdateMessage("Fatal Exception", ex.Message);
+                    _window.ShowDialog(_status, null, settings);
+                }
+
+                TryClose();
+               
+            }
         } 
         private async Task LoadProducts()
         {
