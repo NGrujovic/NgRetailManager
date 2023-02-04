@@ -15,9 +15,16 @@ namespace NRMDataManager.Controllers
         
 
         [HttpGet]
-        
+        [Authorize(Roles = "Manager,Admin")]
         public List<InventoryModel> Get()
         {
+            //if (RequestContext.Principal.IsInRole("Admin"))
+            //{
+            //    do Admin stuff
+            //}else if(RequestContext.Principal.IsInRole("Manager")){
+            //    do manager stuff
+            //}
+
             InventoryData data = new InventoryData();
 
             return data.GetInventory();
@@ -25,8 +32,10 @@ namespace NRMDataManager.Controllers
 
         [HttpPost]
         
+        [Authorize(Roles = "Admin")]
         public void Post(InventoryModel item)
         {
+            
             InventoryData data = new InventoryData();
             data.SaveInventoryRecord(item);
         }

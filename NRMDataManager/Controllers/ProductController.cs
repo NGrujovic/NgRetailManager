@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace NRMDataManager.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cashier,Admin,Manager")]
     public class ProductController : ApiController
     {
         // GET api/product

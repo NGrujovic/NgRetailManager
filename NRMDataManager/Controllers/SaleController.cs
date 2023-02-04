@@ -16,6 +16,7 @@ namespace NRMDataManager.Controllers
     public class SaleController : ApiController
     {
         [HttpPost]
+        [Authorize(Roles = "Cashier")]
         public void Post(SaleModel sale)
         {
 
@@ -27,6 +28,7 @@ namespace NRMDataManager.Controllers
 
         [HttpGet]
         [Route("GetSalesReport")]
+        [Authorize(Roles = "Admin,Manager")]
         public List<SaleReportModel> GetSalesReport()
         {
             SaleData data = new SaleData();
