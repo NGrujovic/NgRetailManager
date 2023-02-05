@@ -14,6 +14,9 @@
             <MenuItem Header="_Account" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
                 <MenuItem x:Name="LogOut" Header="_LogOut"/>
             </MenuItem>
+            <MenuItem Header="_Users" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
+                <MenuItem x:Name="UserManagment" Header="User_Managment"/>
+            </MenuItem>
         </Menu>
         <Grid>
             <ContentControl x:Name="ActiveItem" Margin="20 5 20 20"/>

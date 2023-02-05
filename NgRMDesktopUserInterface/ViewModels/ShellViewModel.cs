@@ -15,6 +15,7 @@ namespace NgRMDesktopUserInterface.ViewModels
         
         private IEventAggregator _events;
         private SalesViewModel _salesVm;
+        
         private ILoggedInUserModel _user;
         private IAPIHelper _apiHelper;
       
@@ -65,6 +66,10 @@ namespace NgRMDesktopUserInterface.ViewModels
             ActivateItem(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
 
+        }
+        public void UserManagment()
+        {
+            ActivateItem(IoC.Get<UserDisplayViewModel>());
         }
     }
 }
