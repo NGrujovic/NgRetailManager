@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NgRMDataManager.Library.DataAccess;
 using NgRMDataManager.Library.Models;
 using System.Collections.Generic;
@@ -12,11 +13,17 @@ namespace NgRMApi.Controllers
     [Authorize(Roles = "Cashier")]
     public class ProductController : ControllerBase
     {
+        private readonly IConfiguration _config;
+
+        public ProductController(IConfiguration config)
+        {
+            _config = config;
+        }
         // GET api/product
         [HttpGet]
         public List<ProductModel> Get()
         {
-            ProductData data = new ProductData();
+            ProductData data = new ProductData(_config);
 
             return data.GetAllProducts();
 

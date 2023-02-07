@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NgRMApi.Data;
 using NgRMApi.Models;
 using NgRMDataManager.Library.DataAccess;
@@ -22,11 +23,15 @@ namespace NgRMApi.Controllers
         
         private readonly ApplicationDbContext _contexdt;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IConfiguration _config;
 
-        public UserController(ApplicationDbContext contexdt,UserManager<IdentityUser> userManager)
+        
+
+        public UserController(ApplicationDbContext contexdt,UserManager<IdentityUser> userManager, IConfiguration config)
         {
             _contexdt = contexdt;
             _userManager = userManager;
+            _config = config;
         }
         
         
@@ -37,7 +42,7 @@ namespace NgRMApi.Controllers
         {
             //using aspnet.identity getting id of logged in person nad passing it to get data from user
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);// old way - RequestContext.Principal.Identity.GetUserId();
-            UserData data = new UserData();
+            UserData data = new UserData(_config);
             return data.GetUserById(userId).First();
 
 

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +13,15 @@ namespace NgRMDataManager.Library.Internal.DataAccess
 {
     internal class SqlDataAccess : IDisposable
     {
+        private readonly IConfiguration _config;
+        public SqlDataAccess(IConfiguration config)
+        {
+            _config = config;
+        }
         public string GetConnectionString(string name)
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            return _config.GetConnectionString(name);
+            
         }
 
         //Load data function for getting data with need to pass in parameter(Example: Getting item with specific id)
@@ -66,6 +73,7 @@ namespace NgRMDataManager.Library.Internal.DataAccess
         }
 
         private bool isClosed = false;
+        
 
         public void CommitTransaction()
         {

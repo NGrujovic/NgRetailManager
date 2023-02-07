@@ -6,15 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NgRMDataManager.Library.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace NgRMDataManager.Library.DataAccess
 {
     public class SaleData
     {
+        private readonly IConfiguration _config;
+
+        public SaleData(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public void SaveSale(SaleModel saleInfo, string cashierId)
         {
             
-            ProductData prodData = new ProductData();
+            ProductData prodData = new ProductData(_config);
             var taxRate = ConfigHelper.GetTaxRate();
             //Start filling in the sale detail models we will save to DB
             List<SaleDetailDBModel> details = new List<SaleDetailDBModel>();
@@ -55,7 +63,7 @@ namespace NgRMDataManager.Library.DataAccess
             
             //Transaction method is method that should not be used every time, since its dangerous if we 
             // leave open transaction
-            using(SqlDataAccess sql = new SqlDataAccess())
+            using(SqlDataAccess sql = new SqlDataAccess(_config))
             {
                 try
                 {
@@ -91,7 +99,7 @@ namespace NgRMDataManager.Library.DataAccess
 
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<SaleReportModel>("dbo.spSale_SaleReport", "NgRmDataConnection");
 
