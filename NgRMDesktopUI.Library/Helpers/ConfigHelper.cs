@@ -12,9 +12,9 @@ namespace NgRMDesktopUI.Library.Helpers
         //TODO Move this from config to API
         public decimal GetTaxRate()
         {
+            
 
-
-            string rateText = ConfigurationManager.AppSettings["taxRate"];
+            string rateText = ConfigurationManager.AppSettings["taxRate"].ToString();
 
             bool isValidTaxRate = Decimal.TryParse(rateText, out decimal taxRate);
             if (isValidTaxRate == false)

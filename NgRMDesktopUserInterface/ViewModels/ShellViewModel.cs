@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using NgRMDesktopUI.Library.Api;
@@ -26,10 +27,10 @@ namespace NgRMDesktopUserInterface.ViewModels
             _salesVm = salesVm;
             _user = user;
             // Subscribing shell view to events, telling it to start listening for specific event
-            _events.Subscribe(this);
+            _events.SubscribeOnPublishedThread(this);
             _apiHelper = apiHelper;
 
-            ActivateItem(IoC.Get<LoginViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>());
 
         }
         
@@ -46,30 +47,32 @@ namespace NgRMDesktopUserInterface.ViewModels
                 return output;
             }
         }
-        public void Handle(LogOnEvent message)
-        {
-            ActivateItem(_salesVm);
-            NotifyOfPropertyChange(() => IsLoggedIn);
-            
-        }
+        
         public void ExitApplication()
         {
-            TryClose();
+            TryCloseAsync();
+            
         }
-        public void LogOut()
+        public async Task LogOut()
         {
             //Clears loggedInUserModel
             _user.ResetUserModel();
 
             //Clears token that is in header of api
             _apiHelper.LogOffUser();
-            ActivateItem(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
 
         }
-        public void UserManagment()
+        public async Task UserManagment()
         {
-            ActivateItem(IoC.Get<UserDisplayViewModel>());
+            await ActivateItemAsync(IoC.Get<UserDisplayViewModel>());
+        }
+
+        public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
+        {
+            await ActivateItemAsync(_salesVm, cancellationToken);
+            NotifyOfPropertyChange(() => IsLoggedIn);
         }
     }
 }

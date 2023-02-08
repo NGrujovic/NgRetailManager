@@ -14,7 +14,7 @@ namespace NgRMDataManager.Library
         {
 
 
-            string rateText = ConfigurationManager.AppSettings["taxRate"];
+            string rateText = "8.75";/*ConfigurationManager.AppSettings["taxRate"].ToString();*/
 
             bool isValidTaxRate = Decimal.TryParse(rateText, out decimal taxRate);
             if (isValidTaxRate == false)

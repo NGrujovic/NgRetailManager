@@ -24,7 +24,7 @@ namespace NgRMDesktopUserInterface.ViewModels
 
         public void Close()
         {
-            TryClose();
+            TryCloseAsync();
         }
     }
 }
