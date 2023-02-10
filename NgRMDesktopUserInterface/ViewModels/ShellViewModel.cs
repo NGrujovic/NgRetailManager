@@ -15,16 +15,16 @@ namespace NgRMDesktopUserInterface.ViewModels
     {
         
         private IEventAggregator _events;
-        private SalesViewModel _salesVm;
+
         
         private ILoggedInUserModel _user;
         private IAPIHelper _apiHelper;
       
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVm,ILoggedInUserModel user, IAPIHelper apiHelper)
+        public ShellViewModel(IEventAggregator events,ILoggedInUserModel user, IAPIHelper apiHelper)
         {
             
             _events = events;
-            _salesVm = salesVm;
+
             _user = user;
             // Subscribing shell view to events, telling it to start listening for specific event
             _events.SubscribeOnPublishedThread(this);
@@ -71,7 +71,7 @@ namespace NgRMDesktopUserInterface.ViewModels
 
         public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
         {
-            await ActivateItemAsync(_salesVm, cancellationToken);
+            await ActivateItemAsync(IoC.Get<SalesViewModel>(), cancellationToken);
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
     }
